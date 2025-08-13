@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:quill_native_bridge/quill_native_bridge.dart';
+// ignore: unused_import
 import 'dart:async' show Completer;
 import 'dart:io' show Platform;
+// ignore: unused_import
 import 'dart:typed_data' show Uint8List;
 
 // Conditional imports for clipboard functionality
+// ignore: unused_import
 import 'package:super_clipboard/super_clipboard.dart'
     if (dart.library.js_interop) 'package:pasteboard/pasteboard.dart';
 
@@ -102,10 +105,55 @@ class _EditorScreenState extends State<EditorScreen> {
               showClipboardPaste: false,
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: _editor,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.5,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                border: Border.all(color: Theme.of(context).dividerColor),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Stack(
+                children: [
+                  Positioned.fill(child: _editor),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(8),
+                          bottomRight: Radius.circular(8),
+                        ),
+                        border: Border(
+                          top: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(Icons.attach_file),
+                            label: const Text('Attachment'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
